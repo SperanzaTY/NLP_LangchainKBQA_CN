@@ -1,0 +1,23 @@
+运行顺序：
+config->GBKtransformer(已经更改过编码格式不用再运行）->ducument->llm->chainKBQA
+遇到缺少相关库函数自行添加
+如果都没问题了直接运行chainKBQA就可以使用了
+
+document.py
+pip install langchain
+pip install langchain_community
+pip install sentence_transformers
+pip install faiss-cpu
+
+AliTextSplitter.py
+pip install modelscope
+
+
+llm.py
+pip install sentencepiece
+
+encoder.py
+pip install chardet
+
+我的python版本3.9.7
+

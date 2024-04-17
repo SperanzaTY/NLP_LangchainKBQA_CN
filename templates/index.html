@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Question and Answer System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff2ca;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .input-section {
+            text-align: center;
+            width: 100%;
+        }
+        
+        .input-section h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .input-section input[type="text"],
+        .input-section input[type="file"] {
+            width: 50%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 2px solid black;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .input-section input[type="text"]::placeholder {
+            color: #aaa;
+        }
+        
+        .button-style,
+        .input-section label.button-style {
+            background-color: #0077CC;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+        
+        .button-style:hover,
+        .input-section label.button-style:hover {
+            background-color: #005fa3;
+        }
+        
+        .input-section input[type="file"] {
+            display: none;
+            /* Hide the default file input */
+        }
+        
+        .answer-section {
+            text-align: left;
+            width: 50%;
+            margin-top: 20px;
+        }
+        
+        .answer strong {
+            color: #333;
+        }
+        
+        .input-section label.button-style {
+            margin-right: 200px;
+            /* 增加选择文件和上传文件按钮之间的距离 */
+        }
+    </style>
+</head>
+
+<body>
+    <img src="{{ url_for('static', filename='780.png') }}" alt="Question Icon" style="width: 160px; height: auto;">
+    <img src="https://template.cityu.edu.hk/template/img/logos/cityu.png" height="50" alt="City University" style="position: absolute; top: 10px; left: 10px;">
+    <div class="input-section">
+        <h1>Input Your Question</h1>
+        <form action="/ask" method="post">
+            <input type="text" name="question" placeholder="input your question...">
+            <button type="submit" class="button-style">Submit</button>
+        </form>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <label for="file-upload" class="button-style">选择文件</label>
+            <input id="file-upload" type="file" name="file" />
+            <input type="submit" class="button-style" value="上传文件" />
+        </form>
+    </div>
+    {% if question and llm_answer and kb_answer %}
+    <div class="answer-section">
+        <strong>Question:</strong>
+        <p>{{ question }}</p>
+        <strong>LLM Answer:</strong>
+        <p>{{ llm_answer }}</p>
+        <strong>Knowledge Base Answer:</strong>
+        <p>{{ kb_answer['result'] }}</p>
+        {% if '无法回答' not in kb_answer['result'] %}
+        <strong>Knowledge Source:</strong>
+        <p>{{ kb_answer['source_documents'][0].page_content }}</p>
+        {% endif %}
+    </div>
+    {% endif %}
+    <img src="{{ url_for('static', filename='1483.png') }}" alt="Decoration Icon" style="position:absolute; top: 20px; right: 20px; width: 200px; height: auto;">
+    <p style="position: fixed; bottom: 0; width: 100%; color: black; font-size: small; text-align: center; margin-bottom: 10px;">
+        - Produced by CS6493 Team 9 -
+    </p>
+</body>
+
+</html>
